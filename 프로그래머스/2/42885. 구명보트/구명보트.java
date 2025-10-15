@@ -4,27 +4,11 @@ class Solution {
         int len = people.length;
         Arrays.sort(people);
         
-        int answer = 0;
-        int sIdx = 0;
-        int eIdx = len - 1;
-        while (len > 0 && sIdx < eIdx){
-            if (people[sIdx] + people[eIdx] <= limit){
-                sIdx++; eIdx--; answer++; len -= 2;
-                if (sIdx == eIdx){
-                    answer++;
-                    len--;
-                    break;
-                }
-            } else {
-                answer++; eIdx--; len--;
-                if (sIdx == eIdx){
-                    answer++;
-                    len--;
-                    break;
-                }
-            }
+        int i = 0, j = people.length - 1;
+        for (; i < j; j--) {
+            if (people[i] + people[j] <= limit)
+                i++;
         }
-        
-        return answer;
+        return people.length - i;
     }
 }
