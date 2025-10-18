@@ -1,0 +1,5 @@
+-- 동물의 이름은 몇 개인지 조회
+-- NULL 집계 X, 중복 X
+SELECT COUNT(DISTINCT NAME) as count
+FROM ANIMAL_INS
+WHERE NAME IS NOT NULL
