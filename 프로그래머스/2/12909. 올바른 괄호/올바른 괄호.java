@@ -1,23 +1,28 @@
 import java.util.*;
 class Solution {
     boolean solution(String s) {
+        boolean answer = true;
         Stack<Character> stack = new Stack<>();
         
-        boolean answer = true;
-        for (int i = 0; i < s.length(); i++){
+        int i = 0;
+        while(i < s.length()){
+            
             if (s.charAt(i) == '(')
                 stack.push('(');
-            else {
-                if (stack.empty()){
+            else 
+                if(!stack.isEmpty() && stack.peek() == '(')
+                    stack.pop();
+                else if(stack.isEmpty()){
                     answer = false;
                     break;
                 }
-                stack.pop();    
-            }
+            
+            i++;
         }
-        if (!stack.empty())
-             answer = false;
         
+        if (!stack.isEmpty())
+            return false;
+
         return answer;
     }
 }
