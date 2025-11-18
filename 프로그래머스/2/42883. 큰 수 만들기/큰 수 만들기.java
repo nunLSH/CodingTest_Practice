@@ -1,27 +1,30 @@
 import java.util.*;
 class Solution {
     public String solution(String number, int k) {
-        Deque<Character> stack = new ArrayDeque<>();
+        Stack<Character> stack = new Stack<>();
         
-        for (int i = 0; i < number.length(); i++) {
+        for (int i = 0; i < number.length(); i++){
             char cur = number.charAt(i);
-
-            while (!stack.isEmpty() && stack.peek() < cur && k > 0) {
-                stack.pop();  
+            
+            while (!stack.isEmpty() && stack.peek() < cur && k > 0){
+                stack.pop();
                 k--;
             }
-
-            stack.push(cur); 
+            
+            stack.push(cur);
         }
         
-        while (k > 0) {
+        while (k > 0){
             stack.pop();
             k--;
         }
         
         StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) sb.append(stack.pop());
-
+        int len = stack.size();
+        for (int i = 0; i < len; i++){
+            sb.append(stack.pop());
+        }
+        
         return sb.reverse().toString();
     }
 }
