@@ -2,6 +2,7 @@ import java.util.*;
 class Solution {
     public String solution(String number, int k) {
         Stack<Character> stack = new Stack<>();
+        char[] answer = new char[number.length() - k];
         
         for (int i = 0; i < number.length(); i++){
             char cur = number.charAt(i);
@@ -14,17 +15,9 @@ class Solution {
             stack.push(cur);
         }
         
-        while (k > 0){
-            stack.pop();
-            k--;
-        }
+        for (int i = 0; i < answer.length; i++)
+            answer[i] = stack.get(i);
         
-        StringBuilder sb = new StringBuilder();
-        int len = stack.size();
-        for (int i = 0; i < len; i++){
-            sb.append(stack.pop());
-        }
-        
-        return sb.reverse().toString();
+        return new String(answer);
     }
 }
