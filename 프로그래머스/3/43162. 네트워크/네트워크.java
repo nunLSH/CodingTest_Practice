@@ -1,12 +1,12 @@
 class Solution {
     public boolean[] visited = new boolean[200];
     
-    public void dfs (int cur, int[][] computers, boolean[] visited){
+    public void dfs (int cur, int[][] computers){
         visited[cur] = true;
         
         for (int i = 0; i < computers.length; i++){
             if (computers[cur][i] == 1 && visited[i] == false){
-                dfs (i, computers, visited);
+                dfs (i, computers);
             }
         }
         
@@ -18,7 +18,7 @@ class Solution {
         
         for (int i = 0; i < computers.length; i++){
             if (!visited[i]){
-                dfs(i, computers, visited);
+                dfs(i, computers);
                 answer++;
             }
         }
