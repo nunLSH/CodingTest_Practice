@@ -17,6 +17,9 @@ class Solution {
         // if (maps[n-1][m-2] == 0 && maps[n-2][m-1] == 0)
         //     return -1;
         
+        // 시작지점이 벽인 경우
+        if (maps[0][0] == 0) return -1;
+        
         // 진입 가능
         int answer = -1; // 중간에 벽이 있을 경우
         Queue<int[]> queue = new ArrayDeque<>();
