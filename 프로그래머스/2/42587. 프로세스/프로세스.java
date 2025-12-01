@@ -2,34 +2,34 @@ import java.util.*;
 class Solution {
     public int solution(int[] priorities, int location) {
         Queue<Integer> queue = new ArrayDeque<>();
-        for (int i : priorities)
-            queue.offer(i);
-
-        Arrays.sort(priorities); // 우선순위 낮은 순..
+        PriorityQueue<Integer> maxPQ 
+            = new PriorityQueue<>(Collections.reverseOrder());
         
-        Stack<Integer> stack = new Stack<>();
-        for (int i : priorities)
-            stack.push(i);
+        for (int p : priorities){
+            queue.offer(p);
+            maxPQ.offer(p);
+        }
         
         int answer = 0;
-        while(!stack.isEmpty()){
-            int exe = stack.peek();
+        while(!queue.isEmpty()){
+            int cur = queue.peek();
             
-            if (exe == queue.peek()){
+            if (cur == maxPQ.peek()){
                 answer++;
                 queue.poll();
-                stack.pop();
+                maxPQ.poll();
                 
                 if (location == 0)
-                    break;
-                else 
-                    location--;
+                    return answer;
+                
+                location--;
             } else{
-                int process = queue.poll();
-                queue.offer(process); 
+                queue.poll();
+                queue.offer(cur); 
                 
                 if (location == 0)
                     location = queue.size() - 1;
+                
                 else 
                     location--;
             }
