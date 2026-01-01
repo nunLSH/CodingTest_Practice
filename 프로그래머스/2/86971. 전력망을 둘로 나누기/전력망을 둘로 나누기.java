@@ -28,29 +28,21 @@ class Solution {
             visited[cutA] = true;
             q.offer(cutA);
             
-            while (!q.isEmpty()){
+            while (!q.isEmpty()) {
                 int cur = q.poll();
-                
+                subCntA++;
+
                 for (int next : graph[cur]) {
-                    if (visited[next]) continue; 
-                    
-                    if (cur == cutA && next == cutB ||
-                       cur == cutB && next == cutA)
-                        continue;
-                    
+                    if ((cur == cutA && next == cutB) ||
+                        (cur == cutB && next == cutA)) continue;
+
+                    if (visited[next]) continue;
+
                     visited[next] = true;
                     q.offer(next);
                 }
             }
-            
-            for (int j = 1; j < visited.length; j++){
-                if (visited[j] == true)
-                    subCntA++;
-            }
-            
-            subCntB = n - subCntA;
-            
-            answer = Math.min(answer, Math.abs(subCntA - subCntB));
+            answer = Math.min(answer, Math.abs(n - 2 * subCntA));
         }
         
         return answer;
