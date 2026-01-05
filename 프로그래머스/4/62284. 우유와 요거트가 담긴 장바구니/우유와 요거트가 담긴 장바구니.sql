@@ -1,0 +1,42 @@
+-- 우유와 요거트를 동시에 구입한 장바구니의 아이디를 조회
+-- SELECT CART_ID
+-- FROM (
+--     SELECT 
+--       CART_ID, 
+--     CASE UPPER(NAME)
+--     WHEN 'MILK' THEN 1
+--     ELSE 0 
+--     END AS MILK,
+--     CASE UPPER(NAME)
+--     WHEN 'YOGURT' THEN 1
+--     ELSE 0
+--     END AS YOGURT
+--     FROM CART_PRODUCTS)
+-- WHERE MILK = 1 AND YOGURT = 1
+-- ORDER BY CART_ID
+
+-- SELECT * 
+-- FROM CART_PRODUCTS
+-- WHERE UPPER(NAME) = 'MILK' OR UPPER(NAME) ='YOGURT'
+
+
+SELECT M.CART_ID 
+FROM (
+    SELECT 
+      CART_ID
+    FROM CART_PRODUCTS
+    WHERE UPPER(NAME) = 'MILK'
+    GROUP BY CART_ID) M
+JOIN (
+    SELECT 
+      CART_ID
+    FROM CART_PRODUCTS
+    WHERE UPPER(NAME) = 'YOGURT'
+    GROUP BY CART_ID) Y
+ON M.CART_ID = Y.CART_ID
+ORDER BY CART_ID
+
+
+
+
+    
