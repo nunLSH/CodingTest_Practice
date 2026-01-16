@@ -2,10 +2,9 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] sequence, int k) {
-        int start = 0;
-        int end = 0; // 끝
+        int start = 0, end = 0, sum = sequence[0];
         int bestS = 0, bestE = 0, bestLen = Integer.MAX_VALUE;
-        int sum = sequence[0];
+        
         while (end < sequence.length){
             if (sum < k){
                 end++;
