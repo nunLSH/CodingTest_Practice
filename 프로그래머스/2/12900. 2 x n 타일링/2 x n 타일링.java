@@ -2,9 +2,7 @@ class Solution {
     public int solution(int n) {
         
         long[] dp = new long[n+1];
-        
         dp[1] = 1;
-        dp[2] = 2;
         
         long answer = calc(n, dp);
         
