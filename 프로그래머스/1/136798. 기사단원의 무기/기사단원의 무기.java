@@ -3,11 +3,11 @@ class Solution {
         int answer = 0;
         
         for (int n = 1; n <= number; n++){
+            int cnt = countDivisors(n);
+            
             // 제한 수치를 넘는 공격력
-            if (countDivisors(n) > limit)
-                answer += power;
-            else 
-                answer += countDivisors(n);
+            if (cnt > limit) answer += power;
+            else answer += cnt;
         }
         
         return answer;
