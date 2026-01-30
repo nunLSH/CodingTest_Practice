@@ -3,9 +3,6 @@ class Solution {
     public int solution(int[] arrayA, int[] arrayB) {
         int answer = 0;
         
-        Arrays.sort(arrayA);
-        Arrays.sort(arrayB);
-        
         answer = isTrue(arrayA, arrayB);
         answer = Math.max(answer, isTrue(arrayB, arrayA));
         
