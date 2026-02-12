@@ -14,10 +14,8 @@ class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 정렬
         Arrays.sort(arr);
 
-        // 투포인터
         int start = 0;
         int end = N - 1;
         int count = 0;
@@ -29,13 +27,10 @@ class Main {
                 count++;
                 start++;
                 end--;
-            }
-            else if (sum < M){
+            } else if (sum < M)
                 start++;
-            }
-            else { // sum > M
+            else
                 end--;
-            }
         }
 
         System.out.println(count);
