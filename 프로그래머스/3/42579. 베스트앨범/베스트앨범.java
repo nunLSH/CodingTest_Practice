@@ -17,7 +17,7 @@ class Solution {
         HashMap<String, Integer> genreTotal = new HashMap<>();
         HashMap<String, List<Song>> map = new HashMap<>();
 
-        // 1️⃣ Map 구성
+        // Map 구성
         for (int i = 0; i < plays.length; i++){
             genreTotal.put(genres[i],
                     genreTotal.getOrDefault(genres[i], 0) + plays[i]);
