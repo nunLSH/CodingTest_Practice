@@ -15,8 +15,8 @@ class Main {
             int[] cur = q.poll();
 
             if (cur[0] == 1){
-                min = Math.min(min, cur[1]);
-                continue;
+                System.out.print(cur[1]);
+                break;
             }
 
             if (cur[0] % 3 == 0 && visited[cur[0]/3] == false){
@@ -32,7 +32,5 @@ class Main {
                 visited[cur[0]-1] = true;
             }
         }
-
-        System.out.print(min);
     }
 }
