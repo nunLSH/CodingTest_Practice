@@ -1,36 +1,23 @@
 import java.util.*;
 import java.io.*;
 
+// DP bottom-up 문제풀이
 class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        boolean[] visited = new boolean[n+1];
-        Queue<int[]> q = new ArrayDeque<>();
-        q.offer(new int[]{n, 0});
+        int[] dp = new int[n+1];
 
-        int min = Integer.MAX_VALUE;
-        while (!q.isEmpty()){
-            int[] cur = q.poll();
-
-            if (cur[0] == 1){
-                System.out.print(cur[1]);
-                break;
-            }
-
-            if (cur[0] % 3 == 0 && visited[cur[0]/3] == false){
-                q.offer(new int[]{cur[0]/3, cur[1]+1});
-                visited[cur[0]/3] = true;
-            }
-            if (cur[0] % 2 == 0 && visited[cur[0]/2] == false){
-               q.offer(new int[]{cur[0]/2, cur[1]+1});
-                visited[cur[0]/2] = true;
-            }
-            if (visited[cur[0]-1] == false){
-                q.offer(new int[]{cur[0]-1, cur[1]+1});
-                visited[cur[0]-1] = true;
-            }
+        for (int i = 2; i <= n; i++){
+            dp[i] = dp[i-1] + 1;
+            
+            if (i % 3 == 0)
+                dp[i] = Math.min(dp[i], dp[i/3] + 1);
+            if (i % 2 == 0)
+                dp[i] = Math.min(dp[i], dp[i/2] + 1);
         }
+
+        System.out.print(dp[n]);
     }
 }
