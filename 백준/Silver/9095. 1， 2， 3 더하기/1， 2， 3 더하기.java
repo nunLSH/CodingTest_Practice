@@ -1,8 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+// DP로 재풀이
 class Main {
-    public static int cnt = 0;
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int t = Integer.parseInt(br.readLine());
@@ -10,26 +10,20 @@ class Main {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < t; i++){
             int n = Integer.parseInt(br.readLine());
-            cnt = 0;
 
-            dfs(0, n);
-            sb.append(cnt).append('\n');
+            int[] dp = new int[n+1];
+            dp[0] = 1; // 아무것도 더하지 않는 방법도 1가지
+            if (n >= 1) dp[1] = 1;
+            if (n >= 2) dp[2] = 2;
+
+            if (n >= 3){
+                for (int j = 3; j <= n; j++)
+                    dp[j] = dp[j-1] + dp[j-2] + dp[j-3];
+            }
+            
+            sb.append(dp[n]).append('\n');
         }
 
         System.out.print(sb.toString());
-    }
-
-    public static void dfs(int n, int target){
-        if (n == target){
-            cnt++;
-            return;
-        }
-
-        if (n > target)
-            return;
-
-        dfs(n+1, target);
-        dfs(n+2, target);
-        dfs(n+3, target);
     }
 }
