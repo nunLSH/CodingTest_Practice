@@ -8,22 +8,27 @@ class Main {
 
         for (int i = 0; i < t; i++){
             int n = Integer.parseInt(br.readLine());
-            int[][] dp = new int[n+1][2];
-            if (n >= 0){
-                dp[0][0] = 1;
-                dp[0][1] = 0;
-            }
-            if (n >= 1){
-                dp[1][0] = 0;
-                dp[1][1] = 1;
-            }
+            int prev2Zero = 1, prev2One = 0;
+            int prev1Zero = 0, prev1One = 1;
 
+            if (n == 0){
+                prev1Zero = prev2Zero;
+                prev1One = prev2One;
+            }
+                 
             for(int j = 2; j <= n; j++){
-                dp[j][0] = dp[j-1][0] + dp[j-2][0];
-                dp[j][1] = dp[j-1][1] + dp[j-2][1];
+                int zero = 0, one = 0;
+
+                zero = prev1Zero + prev2Zero;
+                one = prev1One + prev2One;
+                
+                prev2Zero = prev1Zero;
+                prev2One = prev1One;
+                prev1Zero = zero;
+                prev1One = one;
             }
 
-            System.out.println(dp[n][0] + " " + dp[n][1]);
+            System.out.println(prev1Zero + " " + prev1One);
         }
     }
 }
