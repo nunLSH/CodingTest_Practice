@@ -16,21 +16,14 @@ class Main {
             value[i] = Integer.parseInt(st2.nextToken()); // 가치
         }
 
-        // dp
-        int[][] dp = new int[n+1][k+1];
-        for (int i = 1; i <= n; i++){ // 무게
-            for (int w = 0; w <= k; w++){ // 배낭 용량
-                if (w < weight[i]) {
-                    dp[i][w] = dp[i-1][w];   // 넣을 수 없으니까 안 넣는 선택만 가능
-                } else {
-                    dp[i][w] = Math.max(
-                        dp[i-1][w],
-                        dp[i-1][w - weight[i]] + value[i]
-                    );
-                }
+        // dp >> GPT의 도움으로 개선한 코드
+        int[] dp = new int[k+1];
+        for (int i = 1; i <= n; i++) {
+            for (int w = k; w >= weight[i]; w--) {
+                dp[w] = Math.max(dp[w], dp[w - weight[i]] + value[i]);
             }
         }
         
-        System.out.println(dp[n][k]);
+        System.out.println(dp[k]);
     }
 }
