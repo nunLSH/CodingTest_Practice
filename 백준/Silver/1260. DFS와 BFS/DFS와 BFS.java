@@ -3,6 +3,8 @@ import java.io.*;
 
 class Main {
     public static List<Integer>[] graph;
+    static boolean[] visited;
+    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -25,44 +27,49 @@ class Main {
             graph[b].add(a);
         }
         
+        // 그래프 정렬
+        for (int i = 1; i <= n; i++) {
+            Collections.sort(graph[i]);
+        }
+        
         // DFS
-        StringBuilder sb = new StringBuilder();
-        boolean[] visited = new boolean[n+1];
-        dfs(v, visited, sb);
-        System.out.println(sb.toString());
+        visited = new boolean[n+1];
+        dfs(v);
+        System.out.println();
 
         // BFS
-        StringBuilder sb2 = new StringBuilder();
-        boolean[] visited2 = new boolean[n+1];
-        bfs(v, sb2, visited2);
-        System.out.println(sb2.toString());
+        visited = new boolean[n+1];
+        bfs(v);
     }
 
-    public static void dfs(int cur, boolean[] visited, StringBuilder sb){
-        visited[cur] = true;
-        sb.append(cur).append(" ");
+    static void dfs(int cur) {
 
-        Collections.sort(graph[cur]);
-        for (int i = 0; i < graph[cur].size(); i++){
-            if (!visited[graph[cur].get(i)] == true)
-                dfs(graph[cur].get(i), visited, sb);
+        visited[cur] = true;
+        System.out.print(cur + " ");
+
+        for (int next : graph[cur]) {
+            if (!visited[next])
+                dfs(next);
         }
     }
 
-    public static void bfs(int start, StringBuilder sb2, boolean[] visited){
+    static void bfs(int start) {
+
         Queue<Integer> q = new ArrayDeque<>();
+
         q.offer(start);
         visited[start] = true;
 
-        while(!q.isEmpty()){
-            int cur = q.poll();
-            sb2.append(cur).append(" ");
+        while (!q.isEmpty()) {
 
-            Collections.sort(graph[cur]);
-            for (int i = 0; i < graph[cur].size(); i++){
-                if (!visited[graph[cur].get(i)] == true) {
-                    q.offer(graph[cur].get(i));
-                    visited[graph[cur].get(i)] = true;
+            int cur = q.poll();
+            System.out.print(cur + " ");
+
+            for (int next : graph[cur]) {
+
+                if (!visited[next]) {
+                    visited[next] = true;
+                    q.offer(next);
                 }
             }
         }
