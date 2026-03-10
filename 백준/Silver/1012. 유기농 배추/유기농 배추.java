@@ -4,7 +4,6 @@ import java.io.*;
 
 class Main {
     public static int m, n, k;
-    public static boolean[][] visited;
     public static int[][] cabbage;
     public static int[] dx = new int[]{0, 0, -1, 1}; // 상하좌우
     public static int[] dy = new int[]{-1, 1, 0, 0};
@@ -34,10 +33,9 @@ class Main {
 
         // DFS
         int cnt = 0;
-        visited = new boolean[m][n];
         for (int i = 0; i < m; i++){
             for (int j = 0; j < n; j++){
-                if (cabbage[i][j] == 1 && !visited[i][j]){
+                if (cabbage[i][j] == 1){
                     dfs(i, j);
                     cnt++;
                 }
@@ -48,16 +46,15 @@ class Main {
     }
 
     public static void dfs(int x, int y){
-        visited[x][y] = true;
-        
-        for (int i = 0; i < 4; i++){
+        cabbage[x][y] = 0;
+    
+        for(int i=0;i<4;i++){
             int nx = x + dx[i];
             int ny = y + dy[i];
-            if (inRange(nx, ny) && cabbage[nx][ny] == 1 && !visited[nx][ny])
-                dfs(nx, ny);
+    
+            if(inRange(nx,ny) && cabbage[nx][ny] == 1)
+                dfs(nx,ny);
         }
-
-        return;
     }
 
     public static boolean inRange(int x, int y){
