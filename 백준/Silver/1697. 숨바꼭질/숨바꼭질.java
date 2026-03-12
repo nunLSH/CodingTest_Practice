@@ -10,32 +10,25 @@ class Main {
         int k = Integer.parseInt(st.nextToken());
  
         // BFS
-        Queue<int[]> q = new ArrayDeque<>();
-        boolean[] visited = new boolean[max+1];
-        q.offer(new int[]{n, 0});
-        visited[n] = true;
-
-        while(!q.isEmpty()){
-            int[] cur = q.poll();
-            int pos = cur[0];
-            int time = cur[1];
-            
-            if (pos == k){
-                System.out.println(time);
-                break;
+        Queue<Integer> q = new ArrayDeque<>();
+        int[] dist = new int[max + 1];
+        
+        q.offer(n);
+        dist[n] = 1;
+        
+        while (!q.isEmpty()) {
+            int pos = q.poll();
+        
+            if (pos == k) {
+                System.out.println(dist[pos]-1);
+                return;
             }
-
-            if (2*pos <= max && !visited[2*pos]){
-                visited[2*pos] = true;
-                q.offer(new int[]{2*pos, time+1});
-            }
-            if (pos+1 <= max && !visited[pos+1]){
-                visited[pos+1] = true;
-                q.offer(new int[]{pos+1, time+1});
-            }
-            if(pos-1 >= 0 && !visited[pos-1]){
-                visited[pos-1] = true;
-                q.offer(new int[]{pos-1, time+1});
+        
+            for (int next : new int[]{pos*2, pos+1, pos-1}) {
+                if (next >= 0 && next <= max && dist[next] == 0) {
+                    dist[next] = dist[pos] + 1;
+                    q.offer(next);
+                }
             }
         }
     }
