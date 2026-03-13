@@ -24,32 +24,34 @@ class Main {
         }
 
         // 벽 세우기 (DFS) > 바이러스 퍼뜨리기 (BFS)
-        dfs(0);
+        dfs(0, 0);
 
         System.out.println(safe);
     }
 
-    public static void dfs(int count){
+    public static void dfs(int start, int count){
         // 벽 3개 세움
         if (count == 3){
             // 맵 복사
             int[][] map = new int[n][m];
             for (int i = 0; i < n; i++)
                 map[i] = lab[i].clone();
-            // 바이러스 퍼뜨리고 안전구역 개수 세기
+            
+            // 바이러스 퍼뜨리고 안전구역 영역 계산
             safe = Math.max(bfs(map), safe);
             return;
         }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (lab[i][j] == 0) {
-                    lab[i][j] = 1;     
-                    dfs(count + 1);
-                    lab[i][j] = 0;      
-                }
+    
+        for (int i = start; i < n * m; i++) {
+            int x = i / m;
+            int y = i % m;
+    
+            if (lab[x][y] == 0) {
+                lab[x][y] = 1;
+                dfs(i + 1, count + 1);
+                lab[x][y] = 0;
             }
-        } 
+        }
     }
 
     public static int bfs(int[][] map) {
