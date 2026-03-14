@@ -53,12 +53,15 @@ class Main {
             for (int i = 0; i < 4; i++){
                 int nx = x + dx[i];
                 int ny = y + dy[i];
-                if (inRange(nx, ny) && !visited[nx][ny][broken]){
-                    if (map[nx][ny] == 0){ // 벽을 부수지 않고 이동
+                if (inRange(nx, ny)){
+                    // 벽이 아닌 경우
+                    if (map[nx][ny] == 0 && !visited[nx][ny][broken]){
                         visited[nx][ny][broken] = true;
                         dist[nx][ny][broken] = dist[x][y][broken] + 1;
                         q.offer(new int[]{nx, ny, broken});
-                    } else if (broken == 0 && map[nx][ny] == 1){ // 벽을 부수고 이동
+                    } 
+                    // 벽인데 아직 부수지 않은 경우
+                    else if (map[nx][ny] == 1 && broken == 0 && !visited[nx][ny][1]){ 
                         visited[nx][ny][1] = true;
                         dist[nx][ny][1] = dist[x][y][broken] + 1;
                         q.offer(new int[]{nx, ny, 1});
