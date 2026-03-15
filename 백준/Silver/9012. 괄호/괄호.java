@@ -1,32 +1,29 @@
-import java.util.*;
 import java.io.*;
 
 class Main {
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n; i++) {
             String s = br.readLine();
 
+            int count = 0;
             boolean isVPS = true;
-            Stack<String> stack = new Stack<>();
-            for (int j = 0; j < s.length(); j++){
-                if (s.charAt(j) == '(')
-                    stack.push("c");
-                else {
-                    if (stack.isEmpty()){
-                        isVPS = false;
-                        break;
-                    } 
-                    stack.pop();
+
+            for (char c : s.toCharArray()) {
+                if (c == '(') count++;
+                else count--;
+
+                if (count < 0) {
+                    isVPS = false;
+                    break;
                 }
             }
 
-            if (stack.isEmpty() && isVPS)
-                System.out.println("YES");
-            else 
-                System.out.println("NO");
+            if (count != 0) isVPS = false;
+
+            System.out.println(isVPS ? "YES" : "NO");
         }
     }
 }
