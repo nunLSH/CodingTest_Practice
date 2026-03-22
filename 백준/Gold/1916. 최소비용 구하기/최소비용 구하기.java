@@ -50,15 +50,17 @@ class Main {
         dist[start] = 0;     
         pq.offer(new Node(start, 0));
 
-        while (!pq.isEmpty()){
+        while (!pq.isEmpty()) {
             Node cur = pq.poll();
-
-            if (cur.cost > dist[cur.city]) continue;
-
-            for (Node next : graph[cur.city]){
-                if (dist[next.city] > dist[cur.city] + next.cost){
-                    dist[next.city] = dist[cur.city] + next.cost;
-                    pq.add(new Node(next.city, dist[next.city]));
+        
+            if (dist[cur.city] < cur.cost) continue;
+        
+            for (Node next : graph[cur.city]) {
+                int nextCost = cur.cost + next.cost;
+        
+                if (dist[next.city] > nextCost) {
+                    dist[next.city] = nextCost;
+                    pq.offer(new Node(next.city, nextCost));
                 }
             }
         }
