@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 class Main {
-    public static List<Integer>[] graph;
     public static List<Integer>[] tree;
     public static boolean[] visited;
     public static int[] size;
@@ -15,9 +14,9 @@ class Main {
         int r = Integer.parseInt(st.nextToken());
         int q = Integer.parseInt(st.nextToken());
 
-        graph = new ArrayList[n+1];
+        tree = new ArrayList[n+1];
         for (int i = 1; i <= n; i++)
-            graph[i] = new ArrayList<>();
+            tree[i] = new ArrayList<>();
         
         for (int i = 0; i < n - 1; i++){
             st = new StringTokenizer(br.readLine());
@@ -25,47 +24,28 @@ class Main {
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
 
-            graph[u].add(v);
-            graph[v].add(u);
+            tree[u].add(v);
+            tree[v].add(u);
         }
-
-        tree = new ArrayList[n+1];
-        for (int i = 1; i <= n; i++)
-            tree[i] = new ArrayList<>();
-
-        visited = new boolean[n+1];
 
         size = new int[n+1];
-        size[r] = 1;
-        // 트리 만들기
-        makeTree(r);
-        // 각 정점에 대한 서브트리 개수 구하기
-        countSubtreeNodes(r);
-        
+        countSubtreeNodes(r, 0);
+
+        StringBuilder sb = new StringBuilder();
         while(q -- > 0){
             int u = Integer.parseInt(br.readLine());
-    
-            System.out.println(size[u]);
+            sb.append(size[u]).append('\n');
         }
+
+        System.out.print(sb);
     }
 
-    public static void makeTree(int parent){
-        visited[parent] = true;
-
-        for (int next : graph[parent]){
-            if (!visited[next]){
-                tree[parent].add(next);
-                size[parent]++;
-                makeTree(next);
-            }
-        }
-    }
-
-    public static int countSubtreeNodes(int cur){
+    public static int countSubtreeNodes(int cur, int parent){
         size[cur] = 1;
         
         for (int next : tree[cur]){
-            countSubtreeNodes(next);
+            if (next == parent) continue; 
+            countSubtreeNodes(next, cur);
             size[cur] += size[next];
         }
 
