@@ -8,28 +8,19 @@ class Main {
         String s = br.readLine();
         String t = br.readLine();
 
-        // t -> s로 역연산
-        int isPossible = 0;
-
         StringBuilder sb = new StringBuilder(t);
 
-        while(sb.length() > 0){
-            
-            if (sb.toString().equals(s)){
-                isPossible = 1;
-                break;
-            }
-
+        while (sb.length() > s.length()) {
             int lastIdx = sb.length() - 1;
 
-            if (sb.charAt(lastIdx) == 'A')
+            if (sb.charAt(lastIdx) == 'A') {
                 sb.deleteCharAt(lastIdx);
-            else if (sb.charAt(lastIdx) == 'B'){
+            } else {
                 sb.deleteCharAt(lastIdx);
                 sb.reverse();
             }
         }
 
-        System.out.println(isPossible);
+        System.out.println(sb.toString().equals(s) ? 1 : 0);
     }
 }
