@@ -2,38 +2,37 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        PriorityQueue<Integer> minPQ = new PriorityQueue<>();
-        PriorityQueue<Integer> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
-        
-        for (int i = 0; i < operations.length; i++){
-            if (operations[i].charAt(0) == 'I'){
-                int num = Integer.parseInt(operations[i].split(" ")[1]);
-                minPQ.offer(num);
-                maxPQ.offer(num);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        for (String operation : operations) {
+            String[] parts = operation.split(" ");
+            String command = parts[0];
+            int num = Integer.parseInt(parts[1]);
+
+            if (command.equals("I")) {
+                map.put(num, map.getOrDefault(num, 0) + 1);
             } else {
-                
-                if (minPQ.isEmpty() || maxPQ.isEmpty())
-                    continue;
-                
-                int commend = Integer.parseInt(operations[i].split(" ")[1]);
-                
-                if (commend == 1){
-                    int maxNum = maxPQ.poll();
-                    minPQ.remove(maxNum);
+                if (map.isEmpty()) continue;
+
+                int key;
+                if (num == 1) {
+                    key = map.lastKey();   // 최댓값 삭제
                 } else {
-                    int minNum = minPQ.poll();
-                    maxPQ.remove(minNum);
+                    key = map.firstKey();  // 최솟값 삭제
+                }
+
+                if (map.get(key) == 1) {
+                    map.remove(key);
+                } else {
+                    map.put(key, map.get(key) - 1);
                 }
             }
         }
-        
-        int[] answer = new int[2];
-        
-        if (minPQ.isEmpty() && maxPQ.isEmpty())
-            answer = new int[]{0, 0};
-        else 
-            answer = new int[]{maxPQ.poll(), minPQ.poll()};
-    
-        return answer;
+
+        if (map.isEmpty()) {
+            return new int[]{0, 0};
+        }
+
+        return new int[]{map.lastKey(), map.firstKey()};
     }
 }
