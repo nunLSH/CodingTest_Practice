@@ -6,23 +6,18 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        List<Integer> ropes = new ArrayList<>();
+        int[] ropes = new int[n];
         for (int i = 0; i < n; i++)
-            ropes.add(Integer.parseInt(br.readLine()));
+            ropes[i] = Integer.parseInt(br.readLine());
 
-        ropes.sort(Collections.reverseOrder());
+        Arrays.sort(ropes);
 
-        int sumWeight = ropes.remove(0);
-        int ropesCnt = 1, maxWeight = sumWeight;
-        while (ropes.size() > 0){
-            int curWeight = ropes.remove(0);
-            ropesCnt++;
-            sumWeight += curWeight;
-
-            if (curWeight * ropesCnt >= maxWeight)
-                maxWeight = Math.max(maxWeight, curWeight * ropesCnt);
+        int max = 0;
+        for (int i = 0; i < n; i++){
+            int weight = ropes[i] * (n-i);
+            max = Math.max(weight, max);
         }
 
-        System.out.println(maxWeight);
+        System.out.println(max);
     }
 }
