@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-  
+
 class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -8,12 +8,12 @@ class Main {
         String s = br.readLine();
         String bomb = br.readLine();
         
-        StringBuilder sb = new StringBuilder();   
+        StringBuilder sb = new StringBuilder();  
         int bombLen = bomb.length();
         for (char c : s.toCharArray()){
             sb.append(c);
 
-            if (sb.length() >= bombLen){
+            if (sb.length() >= bomb.length()){
                 boolean match = true;
 
                 for (int i = 0; i < bombLen; i++){
@@ -23,12 +23,11 @@ class Main {
                     }
                 }
 
-                if (match){
+                if (match)
                     sb.delete(sb.length() - bombLen, sb.length());
-                }
             }
         }
-        
-        System.out.println( sb.length() == 0 ? "FRULA" : sb.toString() );
+
+        System.out.println(sb.length() == 0 ? "FRULA" : sb.toString());
     }
 }
