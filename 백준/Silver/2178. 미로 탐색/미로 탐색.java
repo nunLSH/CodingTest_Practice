@@ -5,8 +5,6 @@ class Main {
     public static int[][] graph;
     public static int[] dy = new int[]{0, 0, -1, 1}; // 상하좌우
     public static int[] dx = new int[]{-1, 1, 0, 0};
-    public static boolean[][] visited;
-    public static int[][] dist;
     
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,12 +22,8 @@ class Main {
         }
 
         // BFS
-        visited = new boolean[n+1][m+1];
-        dist = new int[n+1][m+1];
         Queue<int[]> q = new ArrayDeque<>();
         q.offer(new int[]{1, 1});
-        visited[1][1] = true;
-        dist[1][1] = 1;
         
         while(!q.isEmpty()){
             int[] cur = q.poll();
@@ -44,15 +38,14 @@ class Main {
                 int ny = y + dy[i];
 
                 if (1 <= nx && nx <= n && 1 <= ny && ny <= m){
-                    if (graph[nx][ny] == 1 && !visited[nx][ny]){
+                    if (graph[nx][ny] == 1){
                         q.offer(new int[]{nx, ny});
-                        visited[nx][ny] = true;
-                        dist[nx][ny] = dist[x][y] + 1;
+                        graph[nx][ny] = graph[x][y] + 1;
                     }
                 }
             }
         }
 
-        System.out.println(dist[n][m]);
+        System.out.println(graph[n][m]);
     }
 }
