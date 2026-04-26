@@ -9,23 +9,24 @@ class Main {
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
 
-        int[] dist = new int[MAX+1];
+        int[] dist = new int[MAX + 1];
+        Arrays.fill(dist, -1);
+
         Queue<Integer> q = new ArrayDeque<>();
-        
         q.offer(N);
-        dist[N] = 1;
-        
-        while(!q.isEmpty()){
+        dist[N] = 0;
+
+        while (!q.isEmpty()) {
             int pos = q.poll();
 
-            if (pos == K){
-                System.out.println(dist[K] - 1);
+            if (pos == K) {
+                System.out.println(dist[pos]);
                 break;
             }
 
-            int[] next = new int[]{pos+1, pos-1, pos*2};
-            for (int n : next){
-                if (0 <= n && n <= MAX && dist[n] == 0){
+            int[] next = {pos + 1, pos - 1, pos * 2};
+            for (int n : next) {
+                if (0 <= n && n <= MAX && dist[n] == -1) {
                     dist[n] = dist[pos] + 1;
                     q.offer(n);
                 }
