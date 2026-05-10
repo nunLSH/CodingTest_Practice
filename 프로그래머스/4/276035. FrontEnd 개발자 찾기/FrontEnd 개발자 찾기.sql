@@ -1,0 +1,16 @@
+-- Front-end 스킬만 추출
+-- 해당 스킬을 보유하고 있는지 확인
+
+# SELECT CODE
+# FROM SKILLCODES
+# WHERE CATEGORY = 'Front End'
+    
+SELECT 
+    ID, EMAIL, FIRST_NAME, LAST_NAME
+FROM DEVELOPERS
+WHERE SKILL_CODE & (
+    SELECT SUM(CODE)
+    FROM SKILLCODES
+    WHERE CATEGORY = 'Front End'
+) > 0
+ORDER BY ID;
