@@ -4,31 +4,30 @@ class Solution {
     public int[] solution(String[] operations) {
         TreeMap<Integer, Integer> map = new TreeMap<>();
         
-        for (int i = 0; i < operations.length; i++){
-            String[] operation = operations[i].split(" ");
-            String commend = operation[0];
+        for (String op : operations) {
+            String[] operation = op.split(" ");
+            String command = operation[0];
             int num = Integer.parseInt(operation[1]);
             
-            if (commend.equals("I")){
-                map.put(num, num);
+            if (command.equals("I")) {
+                map.put(num, map.getOrDefault(num, 0) + 1);
             } else {
-                if (map.size() == 0)
-                    continue;
+                if (map.isEmpty()) continue;
                 
-                if (num == 1){
-                    int max = map.lastKey();
-                    map.remove(max);
+                int key = (num == 1) ? map.lastKey() : map.firstKey();
+                
+                if (map.get(key) == 1) {
+                    map.remove(key);
                 } else {
-                    int min = map.firstKey();
-                    map.remove(min);
+                    map.put(key, map.get(key) - 1);
                 }
             }
         }
         
-        if (map.size() != 0){
-            return new int[]{map.lastKey(), map.firstKey()};
+        if (map.isEmpty()) {
+            return new int[]{0, 0};
         }
         
-        return new int[]{0, 0};
+        return new int[]{map.lastKey(), map.firstKey()};
     }
 }
