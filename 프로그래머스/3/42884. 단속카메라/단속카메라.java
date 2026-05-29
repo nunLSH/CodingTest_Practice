@@ -1,43 +1,21 @@
 import java.util.*;
 
-class Node implements Comparable<Node>{
-    int in;
-    int out;
-    
-    public Node(int in, int out){
-        this.in = in;
-        this.out = out;
-    }
-    
-    @Override
-    public int compareTo(Node o){
-        return this.out - o.out;
-    }
-}
-
 class Solution {
     public int solution(int[][] routes) {
+
+        Arrays.sort(routes, (a, b) -> a[1] - b[1]);
+
         int answer = 1;
-        
-        PriorityQueue<Node> pq = new PriorityQueue<>();
-        for (int[] r : routes){
-            pq.offer(new Node(r[0], r[1]));
-        }
-        
-        Node cur = pq.poll();
-        int install = cur.out;
-        while(!pq.isEmpty()){
-            Node next = pq.peek();
-            
-            if (next.in <= install){
-                pq.poll();
-            } else {
-                pq.poll();
-                install = next.out;
+        int install = routes[0][1];
+
+        for (int i = 1; i < routes.length; i++) {
+
+            if (routes[i][0] > install) {
+                install = routes[i][1];
                 answer++;
             }
         }
-        
+
         return answer;
     }
 }
